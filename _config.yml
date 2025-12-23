@@ -2,12 +2,9 @@
 
 
 header_pages:
-  - Conceptnote.md
   - Faq.md
   - Journey.md
   - Handbook.md
-  - Conceptnote.md
-  - Faq.md
 
 
 markdown: kramdown
