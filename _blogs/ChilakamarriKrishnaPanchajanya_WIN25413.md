@@ -1,12 +1,18 @@
+---
+title: "My NPTEL Winter Internship Experience"
+author: Chilakamarri Krishna Panchajanya
+nptel_id: WIN25413
+---
+
 # My NPTEL WINTER INTERNSHIP EXPERIENCE
 
 ## Chilakamarri Krishna
 
-When I was in my III BTech II Semester, one of my professors named Absul S Kani suggested me and my friends to write the NPTEL Examination. At first, we were reluctant and thought about the 1000 rupees we needed to spend and the amount of work I had to do to finish the weekly assignments and listen to NPTEL classes along with my college work.
+When I was in my III BTech II Semester, one of my professors named Abdul S Kani suggested me and my friends to write the NPTEL Examination. At first, we were reluctant and thought about the 1000₹ we needed to spend and the amount of work I had to do to finish the weekly assignments and listen to NPTEL classes along with my college work.
 
 But one fine day, we decided to go for it and applied for the NPTEL Programming in Java exam. To be honest, I did not listen to classes daily. I used to listen to classes every Sunday all at once and submit the assignment on the same day.
 
-At last, the day arrived to give the NPTEL Java exam. My five other friends and I prepared extensively for the exam, and after coming out of the examination hall, our faces were filled with happiness and pride that we could do the NPTEL exam well. When the results arrived, I was shocked and happy at the same time. I got 95% in Java and was in the Topper 5% and Elite + Gold category. My five other friends were also placed in the Elite + Gold category.
+At last, the day arrived to give the NPTEL Java exam. My five other friends and I prepared so much for the exam, and after coming out of the exam hall, our faces were filled with happiness and pride that we could do the NPTEL exam well. When the results arrived, I was shocked and happy at the same time. I got 95% in Java and was in the Topper 5% and Elite + Gold category. My five other friends were also in the Elite + Gold category.
 
 The same professor suggested us to apply for the NPTEL Winter Internship, which I had not heard of until that day. We applied for the internship under the guidance of Professor Sudarshan Iyengar and had little to no hope that I would get selected. But one fine day, I got an email that I was selected for the internship.
 
@@ -16,7 +22,7 @@ The internship started on 22 December 2025 at 9:00 AM in the morning. I had no c
 
 I would wake up early in the morning every day, eagerly waiting for the Zoom meeting to start and listening to the motivation provided by Sudarshan Iyengar sir and Meenakshi ma’am. Until that very first Zoom meeting, I had no idea that Zoom had so many features.
 
-During each meeting, I carefully and curiously listened to each and every word of Sudarshan sir. I learned many things during this internship. One of them was realizing that I can eat two chapathis within three minutes by turning off the video and carefully listening to the meeting, while being afraid that Sudarshan sir might ask why my video was off.
+During each meeting, I carefully and curiously listened to each and every word of Sudarshan sir. I learned many things during this internship. One of them was realizing that I can eat two chapathis within 3 minutes by turning off the video and carefully listening to the meeting, while being afraid that Sudarshan sir might ask why my video was off.
 
 I was very eager and enthusiastic to speak every day in the meeting, and I wanted to be known to Sudarshan sir in a good way (not in a bad way).
 
