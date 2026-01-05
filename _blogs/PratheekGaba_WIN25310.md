@@ -1,10 +1,10 @@
 ---
-title: A Internship Journey
+title: An Internship Journey
 author: Pratheek Gaba
 nptel_id: WIN25310
 ---
 
-# A Internship Journey
+# An Internship Journey
 
 I logged into my **IIT Ropar** internship expecting lessons. What I didn’t expect was a quiet upgrade to my thinking software.
 
