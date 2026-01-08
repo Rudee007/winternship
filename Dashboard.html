@@ -68,7 +68,7 @@
       box-shadow: 0 4px 10px rgba(26,35,126,0.4);
     }
 
-    /* Dashboard Container */
+    /* Content Container */
     .dashboard-container {
       width: 95%;
       max-width: 1400px;
@@ -88,6 +88,18 @@
     iframe.active {
       display: block;
     }
+
+    .placeholder {
+      display: none;
+      padding: 60px;
+      text-align: center;
+      color: #555;
+      font-size: 16px;
+    }
+
+    .placeholder.active {
+      display: block;
+    }
   </style>
 </head>
 
@@ -101,31 +113,53 @@
 
   <!-- Tabs -->
   <div class="tabs">
-    <div class="tab active" onclick="showTab(0)">Summary View</div>
-    <div class="tab" onclick="showTab(1)">Detailed Progress</div>
+    <div class="tab active" onclick="showTab(0)">Dashboard</div>
+    <div class="tab" onclick="showTab(1)">Leader Board</div>
+    <div class="tab" onclick="showTab(2)">CS Progress</div>
+    <div class="tab" onclick="showTab(3)">Attendance & HP</div>
+    <div class="tab" onclick="showTab(4)">Tickets</div>
   </div>
 
-  <!-- Dashboard -->
+  <!-- Content -->
   <div class="dashboard-container">
-    <iframe class="active"
+
+    <!-- Dashboard (to be added later) -->
+    <div class="placeholder active">
+      Dashboard charts and visuals will be embedded here.
+    </div>
+
+    <!-- Leader Board (iframe added) -->
+    <iframe
       src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQikYOJQx4cmwGmF8qgmcR7UFPD4NQc69XzI_BR59fIWpx39bQgy4AlG7EQc8ejdW1112YhYLcMnyo0/pubhtml?gid=1363299594&single=true&widget=true&headers=false">
     </iframe>
 
+    <!-- CS Progress (iframe added) -->
     <iframe
       src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQikYOJQx4cmwGmF8qgmcR7UFPD4NQc69XzI_BR59fIWpx39bQgy4AlG7EQc8ejdW1112YhYLcMnyo0/pubhtml?gid=0&single=true&widget=true&headers=false">
     </iframe>
+
+    <!-- Attendance & HP -->
+    <div class="placeholder">
+      Attendance & HP analytics will be embedded here.
+    </div>
+
+    <!-- Tickets -->
+    <div class="placeholder">
+      Ticket tracking dashboard will be embedded here.
+    </div>
+
   </div>
 
   <script>
     function showTab(index) {
       const tabs = document.querySelectorAll('.tab');
-      const iframes = document.querySelectorAll('iframe');
+      const contents = document.querySelectorAll('iframe, .placeholder');
 
       tabs.forEach(tab => tab.classList.remove('active'));
-      iframes.forEach(frame => frame.classList.remove('active'));
+      contents.forEach(content => content.classList.remove('active'));
 
       tabs[index].classList.add('active');
-      iframes[index].classList.add('active');
+      contents[index].classList.add('active');
     }
   </script>
 
