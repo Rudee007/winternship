@@ -13,11 +13,11 @@
 <meta property="og:url" content="http://localhost:4000/winternship/projects/vi-notes/" />
 <meta property="og:site_name" content="Winternship 2025" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2026-01-08T13:18:57+05:30" />
+<meta property="article:published_time" content="2026-01-08T15:35:30+05:30" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Vi-Notes" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2026-01-08T13:18:57+05:30","datePublished":"2026-01-08T13:18:57+05:30","description":"Project Overview","headline":"Vi-Notes","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/winternship/projects/vi-notes/"},"url":"http://localhost:4000/winternship/projects/vi-notes/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2026-01-08T15:35:30+05:30","datePublished":"2026-01-08T15:35:30+05:30","description":"Project Overview","headline":"Vi-Notes","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/winternship/projects/vi-notes/"},"url":"http://localhost:4000/winternship/projects/vi-notes/"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/winternship/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/winternship/feed.xml" title="Winternship 2025" /></head>
 <body><header class="site-header" role="banner">
@@ -116,6 +116,53 @@
 <h2 id="github-repository"><strong>GitHub Repository</strong></h2>
 
 <p><a href="https://github.com/vicharanashala/vi-notes" target="_blank">Vi-Notes</a></p>
+
+<h2 id="upcoming-features"><strong>Upcoming Features</strong></h2>
+
+<details style="margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+<summary style="cursor: pointer; padding: 1rem 1.5rem; background: linear-gradient(135deg, #FF6B6B20 0%, #FF6B6B40 100%); border-left: 6px solid #FF6B6B; font-weight: 600; list-style: none;">&nbsp;Basic Writing Editor</summary>
+<div style="padding: 1.5rem; background-color: white;">
+Create a simple text editor that allows users to type their content. This editor will be the primary location for writing within the application. It does not need formatting options like bold or headings. The goal is to provide a clean and distraction-free space where text input can be captured reliably.
+<br /><br />
+<a href="https://github.com/vicharanashala/vi-notes/issues/1" target="_blank" style="color: #FF6B6B; font-weight: 600; text-decoration: none;">View Feature Request #1 →</a>
+</div>
+</details>
+
+<details style="margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+<summary style="cursor: pointer; padding: 1rem 1.5rem; background: linear-gradient(135deg, #FF6B6B20 0%, #FF6B6B40 100%); border-left: 6px solid #FF6B6B; font-weight: 600; list-style: none;">&nbsp;User Login and Registration</summary>
+<div style="padding: 1.5rem; background-color: white;">
+Implement basic user registration and login so that each writing session can be associated with a specific user. Users should be able to sign up using an email and password and log in using the same credentials. Advanced features like roles, password reset are not required at this stage.
+<br /><br />
+<a href="https://github.com/vicharanashala/vi-notes/issues/2" target="_blank" style="color: #FF6B6B; font-weight: 600; text-decoration: none;">View Feature Request #2 →</a>
+</div>
+</details>
+
+<details style="margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+<summary style="cursor: pointer; padding: 1rem 1.5rem; background: linear-gradient(135deg, #FF6B6B20 0%, #FF6B6B40 100%); border-left: 6px solid #FF6B6B; font-weight: 600; list-style: none;">&nbsp;Capture Keystroke Timing</summary>
+<div style="padding: 1.5rem; background-color: white;">
+While a user is typing in the editor, record basic keystroke timing information. This includes the time difference between key presses and releases. The actual characters typed must not be stored. This data will be used later to understand typing behaviour, not the content itself.
+<br /><br />
+<a href="https://github.com/vicharanashala/vi-notes/issues/3" target="_blank" style="color: #FF6B6B; font-weight: 600; text-decoration: none;">View Feature Request #3 →</a>
+</div>
+</details>
+
+<details style="margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+<summary style="cursor: pointer; padding: 1rem 1.5rem; background: linear-gradient(135deg, #FF6B6B20 0%, #FF6B6B40 100%); border-left: 6px solid #FF6B6B; font-weight: 600; list-style: none;">&nbsp;Detect Pasted Text</summary>
+<div style="padding: 1.5rem; background-color: white;">
+Detect when a user pastes text into the editor instead of typing it manually. When a paste happens, record that event and the amount of text pasted. This will help differentiate pasted content from naturally typed content in analysis.
+<br /><br />
+<a href="https://github.com/vicharanashala/vi-notes/issues/4" target="_blank" style="color: #FF6B6B; font-weight: 600; text-decoration: none;">View Feature Request #4 →</a>
+</div>
+</details>
+
+<details style="margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+<summary style="cursor: pointer; padding: 1rem 1.5rem; background: linear-gradient(135deg, #FF6B6B20 0%, #FF6B6B40 100%); border-left: 6px solid #FF6B6B; font-weight: 600; list-style: none;">&nbsp;Save Writing Session Data</summary>
+<div style="padding: 1.5rem; background-color: white;">
+Save the written text along with related session information so it can be accessed later. Each writing session should be stored in a way that links the content to the user and the captured typing metadata. The initial implementation can focus on simple storage and retrieval without complex analysis.
+<br /><br />
+<a href="https://github.com/vicharanashala/vi-notes/issues/5" target="_blank" style="color: #FF6B6B; font-weight: 600; text-decoration: none;">View Feature Request #5 →</a>
+</div>
+</details>
 
 
   </div>
