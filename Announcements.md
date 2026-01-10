@@ -10,7 +10,7 @@ announcements:
     content: |
       **Step 1: Understand the network**
       
-      The Endorsement Network functions on a simple rule: students can endorse each other. Crucially, every line of endorsements must ultimately link back to a Jadei holder, who possesses the Gold, Silver, and Bronze tiers. The more students connected to a Jadei holder, the higher their reputation. Any groups that fail to connect to a Jadei holder form "floating islands" and are deemed inactive within the system.
+      The Endorsement Network functions on a simple rule: students can endorse each other. Crucially, every line of endorsements must ultimately link back to a Jedi holder, who possesses the Gold, Silver, and Bronze tiers. The more students connected to a Jedi holder, the higher their reputation. Any groups that fail to connect to a Jedi holder form "floating islands" and are deemed inactive within the system.
       
       **Step 2: Follow endorsement rules**
       
@@ -33,12 +33,6 @@ announcements:
       **Step 6: Your challenge**
       
       Using this data, students must create a dashboard that visualizes endorsement chains, penalties, incentives, and overall network health. The design and style are completely open-ended.
-#   - title: "Another Announcement"
-#     date: "January 9, 2026"
-#     description: "Add more announcements here as needed. You can include longer descriptions with multiple details about deadlines, updates, or important information."
-#   - title: "Third Announcement"
-#     date: "January 8, 2026"
-#     description: "This demonstrates how multiple announcements appear in the list."
 ---
 
 [← Back]({{ site.baseurl }}/)
