@@ -10,17 +10,16 @@
     body {
       margin: 0;
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
       background: linear-gradient(135deg, #eef2ff, #f8fafc);
       font-family: "Inter", system-ui, Arial, sans-serif;
+      display: flex;
+      justify-content: center;
     }
 
     .container {
       width: 100%;
       max-width: 1300px;
-      margin-top: 40px;
+      margin: 40px;
       padding: 32px;
       background: white;
       border-radius: 16px;
@@ -35,50 +34,34 @@
       color: #1f2937;
     }
 
-    .tabs {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .tab {
-      padding: 10px 16px;
-      border-radius: 999px;
-      border: 1px solid #d1d5db;
-      background: #f9fafb;
-      cursor: pointer;
-      font-weight: 600;
-      color: #374151;
-    }
-
-    .tab.active {
-      background: #4f46e5;
-      color: white;
-      border-color: #4f46e5;
-    }
-
     .controls {
       display: flex;
+      gap: 16px;
       justify-content: center;
       margin-bottom: 24px;
+      flex-wrap: wrap;
     }
 
     select {
       padding: 10px 14px;
-      font-size: 16px;
+      font-size: 15px;
       border-radius: 8px;
       border: 1px solid #d1d5db;
-      min-width: 360px;
+      min-width: 220px;
     }
 
-    .tree-wrapper {
-      display: flex;
-      justify-content: center;
+    .mermaid-wrapper {
       background: #f9fafb;
-      padding: 30px;
+      padding: 24px;
       border-radius: 12px;
       overflow-x: auto;
+    }
+
+    .hint {
+      text-align: center;
+      margin-top: 10px;
+      color: #6b7280;
+      font-size: 13px;
     }
   </style>
 </head>
@@ -87,30 +70,37 @@
   <div class="container">
     <h2>🌳 Endorsement Networks</h2>
 
-    <!-- Tabs -->
-    <div class="tabs">
-      <div class="tab active" data-type="VALID">Valid Networks</div>
-      <div class="tab" data-type="FLOATING">Floating Islands</div>
-      <div class="tab" data-type="DEFAULTER">Defaulter Networks</div>
-    </div>
-
-    <!-- Root selector -->
     <div class="controls">
+      <select id="typeSelect">
+        <option value="VALID">Jedi Networks</option>
+        <option value="FLOATING">Floating Islands</option>
+        <option value="DEFAULTER">Defaulter Networks</option>
+      </select>
+
       <select id="rootSelect">
-        <option value="">Select a network…</option>
+        <option value="">Select a root…</option>
       </select>
     </div>
 
-    <!-- Tree -->
-    <div class="tree-wrapper">
-      <div id="tree">Select a network to view</div>
+    <div class="mermaid-wrapper">
+      <div class="mermaid" id="tree">
+        Select a network to view the tree
+      </div>
+    </div>
+
+    <div class="hint">
+      Use browser zoom or horizontal scroll for large networks
     </div>
   </div>
 
   <script>
+    const API_URL = "API_URL_HERE";
+
+    let dataByType = {};
+    let currentType = "VALID";
+
     mermaid.initialize({
       startOnLoad: false,
-      securityLevel: "loose",
       theme: "base",
       themeVariables: {
         primaryColor: "#ffffff",
@@ -129,98 +119,72 @@
       }
     });
 
-    const API_URL = "YOUR_API_URL_HERE";
-
-    let dataByType = {};
-    let currentType = "VALID";
-    let renderCounter = 0;
-
     fetch(API_URL)
       .then(res => res.json())
       .then(json => {
         dataByType = json;
-        populateDropdown();
+        populateRoots();
+      })
+      .catch(err => {
+        document.getElementById("tree").innerText = "Failed to load data";
+        console.error(err);
       });
 
-    /* ---------------- Tabs ---------------- */
-    document.querySelectorAll(".tab").forEach(tab => {
-      tab.addEventListener("click", () => {
-        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-        tab.classList.add("active");
-
-        currentType = tab.dataset.type;
-        populateDropdown();
-        document.getElementById("tree").innerHTML = "Select a network to view";
-      });
+    document.getElementById("typeSelect").addEventListener("change", e => {
+      currentType = e.target.value;
+      populateRoots();
+      clearTree();
     });
-
-    /* ---------------- Dropdown ---------------- */
-    function populateDropdown() {
-      const select = document.getElementById("rootSelect");
-      select.innerHTML = `<option value="">Select a network…</option>`;
-
-      const group = dataByType[currentType] || {};
-      Object.keys(group).forEach(rootLabel => {
-        const opt = document.createElement("option");
-        opt.value = rootLabel;
-        opt.textContent = rootLabel;
-        select.appendChild(opt);
-      });
-    }
 
     document.getElementById("rootSelect").addEventListener("change", e => {
-      renderTree(e.target.value);
+      const root = e.target.value;
+      if (root) renderTree(root);
+      else clearTree();
     });
 
-    /* ---------------- Mermaid Render (FIXED) ---------------- */
+    function populateRoots() {
+      const rootSelect = document.getElementById("rootSelect");
+      rootSelect.innerHTML = `<option value="">Select a root…</option>`;
+
+      const group = dataByType[currentType];
+      if (!group) return;
+
+      Object.keys(group)
+        .sort()
+        .forEach(rootLabel => {
+          const opt = document.createElement("option");
+          opt.value = rootLabel;
+          opt.textContent = rootLabel;
+          rootSelect.appendChild(opt);
+        });
+    }
+
+    function clearTree() {
+      const el = document.getElementById("tree");
+      el.innerHTML = "Select a network to view the tree";
+    }
+
     function renderTree(rootLabel) {
-      if (!rootLabel) return;
+      const nodes = dataByType[currentType][rootLabel].nodes;
 
-      const network = dataByType[currentType][rootLabel];
-      if (!network) return;
-
-      const nodes = network.nodes;
-      const children = new Map();
-      const labels = new Map();
+      let diagram = "graph TD\n";
 
       nodes.forEach(n => {
-        labels.set(n.child_id, n.child_label);
+        const child = n.child_id;
+        const childLabel = n.child_label;
+
+        diagram += `${child}["<b>${childLabel}</b>"]\n`;
+
         if (n.parent_id) {
-          if (!children.has(n.parent_id)) children.set(n.parent_id, []);
-          children.get(n.parent_id).push(n.child_id);
+          diagram += `${n.parent_id} --> ${child}\n`;
         }
       });
 
-      const rootNode = nodes.find(n => n.parent_id === null);
-      if (!rootNode) return;
+      const el = document.getElementById("tree");
+      el.innerHTML = diagram;
 
-      let diagram = "graph TD\n";
-      const visited = new Set();
-
-      function dfs(node) {
-        if (visited.has(node)) return;
-        visited.add(node);
-
-        (children.get(node) || []).forEach(child => {
-          diagram += `
-${node}["<b>${labels.get(node)}</b>"]
---> 
-${child}["<b>${labels.get(child)}</b>"]
-`;
-          dfs(child);
-        });
-      }
-
-      diagram += `${rootNode.child_id}["<b>${rootNode.child_label}</b>"]\n`;
-      dfs(rootNode.child_id);
-
-      const treeDiv = document.getElementById("tree");
-      treeDiv.innerHTML = "";
-
-      const renderId = "mermaid_" + (++renderCounter);
-      mermaid.render(renderId, diagram).then(({ svg }) => {
-        treeDiv.innerHTML = svg;
-      });
+      // IMPORTANT: force re-render
+      mermaid.init(undefined, el);
     }
   </script>
 </body>
