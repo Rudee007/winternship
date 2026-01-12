@@ -10,17 +10,17 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: linear-gradient(135deg, #eef2ff, #f8fafc);
-      font-family: Inter, system-ui, Arial, sans-serif;
       display: flex;
       justify-content: center;
       align-items: flex-start;
+      background: linear-gradient(135deg, #eef2ff, #f8fafc);
+      font-family: "Inter", system-ui, Arial, sans-serif;
     }
 
     .container {
       width: 100%;
       max-width: 1300px;
-      margin: 40px;
+      margin-top: 40px;
       padding: 32px;
       background: white;
       border-radius: 16px;
@@ -72,20 +72,13 @@
       min-width: 360px;
     }
 
-    .mermaid {
+    .tree-wrapper {
+      display: flex;
+      justify-content: center;
       background: #f9fafb;
       padding: 30px;
       border-radius: 12px;
       overflow-x: auto;
-      display: flex;
-      justify-content: center;
-    }
-
-    .hint {
-      text-align: center;
-      color: #6b7280;
-      font-size: 14px;
-      margin-top: 10px;
     }
   </style>
 </head>
@@ -109,12 +102,8 @@
     </div>
 
     <!-- Tree -->
-    <div class="mermaid" id="tree">
-      Select a network to view
-    </div>
-
-    <div class="hint">
-      Use browser zoom or scroll to explore large networks
+    <div class="tree-wrapper">
+      <div id="tree">Select a network to view</div>
     </div>
   </div>
 
@@ -123,6 +112,16 @@
       startOnLoad: false,
       securityLevel: "loose",
       theme: "base",
+      themeVariables: {
+        primaryColor: "#ffffff",
+        primaryBorderColor: "#4f46e5",
+        primaryTextColor: "#111827",
+        secondaryColor: "#eef2ff",
+        secondaryBorderColor: "#6366f1",
+        lineColor: "#374151",
+        fontFamily: "Inter, Arial, sans-serif",
+        fontSize: "15px"
+      },
       flowchart: {
         curve: "basis",
         nodeSpacing: 50,
@@ -130,25 +129,20 @@
       }
     });
 
-    const API_URL = "https://script.google.com/macros/s/AKfycbzpcyhUQstB2Fvjv4oha_3a6b12-q5pAh2B-DMQrh6nIH7llWIq4pt6hY17zC8vqc5f/exec";
+    const API_URL = "YOUR_API_URL_HERE";
 
     let dataByType = {};
     let currentType = "VALID";
+    let renderCounter = 0;
 
     fetch(API_URL)
       .then(res => res.json())
       .then(json => {
         dataByType = json;
         populateDropdown();
-      })
-      .catch(err => {
-        document.getElementById("tree").innerText = "Failed to load data";
-        console.error(err);
       });
 
-    /* -------------------------
-       Tabs logic
-    ------------------------- */
+    /* ---------------- Tabs ---------------- */
     document.querySelectorAll(".tab").forEach(tab => {
       tab.addEventListener("click", () => {
         document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
@@ -156,14 +150,11 @@
 
         currentType = tab.dataset.type;
         populateDropdown();
-
-        document.getElementById("tree").innerText = "Select a network to view";
+        document.getElementById("tree").innerHTML = "Select a network to view";
       });
     });
 
-    /* -------------------------
-       Dropdown population
-    ------------------------- */
+    /* ---------------- Dropdown ---------------- */
     function populateDropdown() {
       const select = document.getElementById("rootSelect");
       select.innerHTML = `<option value="">Select a network…</option>`;
@@ -181,9 +172,7 @@
       renderTree(e.target.value);
     });
 
-    /* -------------------------
-       Mermaid rendering
-    ------------------------- */
+    /* ---------------- Mermaid Render (FIXED) ---------------- */
     function renderTree(rootLabel) {
       if (!rootLabel) return;
 
@@ -191,8 +180,6 @@
       if (!network) return;
 
       const nodes = network.nodes;
-
-      // Build adjacency
       const children = new Map();
       const labels = new Map();
 
@@ -204,7 +191,6 @@
         }
       });
 
-      // Find root id
       const rootNode = nodes.find(n => n.parent_id === null);
       if (!rootNode) return;
 
@@ -215,26 +201,26 @@
         if (visited.has(node)) return;
         visited.add(node);
 
-        const kids = children.get(node) || [];
-        kids.forEach(k => {
-          diagram += `${node}["${labels.get(node)}"] --> ${k}["${labels.get(k)}"]\n`;
-          dfs(k);
+        (children.get(node) || []).forEach(child => {
+          diagram += `
+${node}["<b>${labels.get(node)}</b>"]
+--> 
+${child}["<b>${labels.get(child)}</b>"]
+`;
+          dfs(child);
         });
       }
 
-      diagram += `${rootNode.child_id}["${rootNode.child_label}"]\n`;
+      diagram += `${rootNode.child_id}["<b>${rootNode.child_label}</b>"]\n`;
       dfs(rootNode.child_id);
 
-      // Optional visual cue for defaulters
-      if (currentType === "DEFAULTER") {
-        diagram += `
-classDef defaulter fill:#fee2e2,stroke:#dc2626,stroke-width:2px;
-`;
-      }
-
       const treeDiv = document.getElementById("tree");
-      treeDiv.innerHTML = diagram;
-      mermaid.init(undefined, treeDiv);
+      treeDiv.innerHTML = "";
+
+      const renderId = "mermaid_" + (++renderCounter);
+      mermaid.render(renderId, diagram).then(({ svg }) => {
+        treeDiv.innerHTML = svg;
+      });
     }
   </script>
 </body>
