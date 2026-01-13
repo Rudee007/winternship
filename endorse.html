@@ -164,28 +164,42 @@
       el.innerHTML = "Select a network to view the tree";
     }
 
-    function renderTree(rootLabel) {
-      const nodes = dataByType[currentType][rootLabel].nodes;
+    function safeId(text) {
+  return text.replace(/[^a-zA-Z0-9_]/g, "_");
+}
 
-      let diagram = "graph TD\n";
+function renderTree(rootLabel) {
+  const nodes = dataByType[currentType][rootLabel].nodes;
 
-      nodes.forEach(n => {
-        const child = n.child_id;
-        const childLabel = n.child_label;
+  let diagram = "graph TD\n";   
 
-        diagram += `${child}["<b>${childLabel}</b>"]\n`;
+  nodes.forEach((n) => {
+    const childId = safeId(n.child_id);
+    const parentId = n.parent_id ? safeId(n.parent_id) : null;
+    const childLabel = n.child_label;
 
-        if (n.parent_id) {
-          diagram += `${n.parent_id} --> ${child}\n`;
-        }
-      });
+    diagram += `${childId}["<b>${childLabel}</b>"]\n`;
 
-      const el = document.getElementById("tree");
-      el.innerHTML = diagram;
-
-      // IMPORTANT: force re-render
-      mermaid.init(undefined, el);
+    if (parentId) {
+      diagram += `${parentId} --> ${childId}\n`;
     }
+  });
+
+  const el = document.getElementById("tree");
+  el.innerHTML = "";
+
+  const uniqueId = "tree_" + Date.now();
+
+  mermaid.render(uniqueId, diagram)
+    .then(({ svg }) => {
+      el.innerHTML = svg;
+    })
+    .catch(err => {
+      el.innerHTML = "Failed to render tree";
+      console.error(err);
+    });
+}
+
   </script>
 </body>
 </html>
