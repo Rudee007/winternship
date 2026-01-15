@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Important links
-permalink: /links/
+permalink: /link/
 links:
     - label: "MERNverse"
       url: "https://docs.google.com/spreadsheets/d/1vOQY7BYRMmNiSCBkzrYR-b-1r54jViEmzvL9nD12PoI/edit?usp=sharing"
