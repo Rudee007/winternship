@@ -25,7 +25,7 @@ links:
 
 {% if page.links and page.links.size > 0 %}
 
-Below are some important links related to the Pinternship. Please use them as reference whenever needed:
+Below are some important links related to the Winternship. Please use them as reference whenever needed:
 
 {% for item in page.links %}
 - [{{ item.label }}]({{ item.url }}){:target="_blank"}
