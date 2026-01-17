@@ -98,7 +98,7 @@
   /* -------------------------------------------------------
    * CONFIG – ADD YOUR WEB APP URL HERE
    * ----------------------------------------------------- */
-  const API_URL = "https://script.google.com/macros/s/AKfycbxhz_DNPJwhBwyxuApDKhE1y1yip8pp-pX_IGbN5AvBDu3Q76BcJ_vu-lLMSk2pkBmmGQ/exec";
+  const API_URL = "https://script.google.com/macros/s/AKfycbzU_TJdWjO_vwoLEIimGSC2TfASEKcTiY8ac_hXz6s4uAaIaSOZX9-vCRudFebMyWGaMQ/exec";
 
   let dataByType = {};
   let currentType = "VALID";
@@ -193,39 +193,21 @@
    * ----------------------------------------------------- */
 
 function renderTree(rootLabel) {
-  const nodes = dataByType[currentType][rootLabel].nodes;
+  const group = dataByType[currentType][rootLabel];
+
+  const nodes = group.nodes;
+  const edges = group.edges;
 
   let diagram = "graph TD\n";
 
-  // Track what we already rendered
-  const renderedNodes = new Set();
-  const renderedEdges = new Set();
-
+  /* ---------- Render nodes (once) ---------- */
   nodes.forEach(n => {
-    const childId = safeId(n.child_id);
-    const parentId = n.parent_id ? safeId(n.parent_id) : null;
-    const label = n.child_label;
+    diagram += `${n.id}["${n.label}"]\n`;
+  });
 
-    /* ---- NODE (render once) ---- */
-    if (!renderedNodes.has(childId)) {
-      diagram += `${childId}["${label}"]\n`;
-      renderedNodes.add(childId);
-    }
-
-    /* ---- EDGE (render once) ---- */
-    if (parentId) {
-      // Ensure parent node exists
-      if (!renderedNodes.has(parentId)) {
-        diagram += `${parentId}["${n.parent_id}"]\n`;
-        renderedNodes.add(parentId);
-      }
-
-      const edgeKey = `${parentId}-->${childId}`;
-      if (!renderedEdges.has(edgeKey)) {
-        diagram += `${parentId} --> ${childId}\n`;
-        renderedEdges.add(edgeKey);
-      }
-    }
+  /* ---------- Render edges (once) ---------- */
+  edges.forEach(e => {
+    diagram += `${e.from} --> ${e.to}\n`;
   });
 
   const el = document.getElementById("tree");
@@ -238,10 +220,9 @@ function renderTree(rootLabel) {
     })
     .catch(err => {
       el.innerHTML = "Failed to render tree";
-      console.error(err);
+      console.error(err, diagram);
     });
 }
-
 
 </script>
 </body>
