@@ -98,7 +98,7 @@
   /* -------------------------------------------------------
    * CONFIG – ADD YOUR WEB APP URL HERE
    * ----------------------------------------------------- */
-  const API_URL = "https://script.google.com/macros/s/AKfycbxhz_DNPJwhBwyxuApDKhE1y1yip8pp-pX_IGbN5AvBDu3Q76BcJ_vu-lLMSk2pkBmmGQ/exec";
+  const API_URL = "https://script.google.com/macros/s/AKfycbx790OAnanMoi_eNsz-dpCaDq_9G-z3pJOzh-UedO2zqwykfcHGVtasQdqnxuMe_h6EgA/exec";
 
   let dataByType = {};
   let currentType = "VALID";
@@ -191,32 +191,39 @@
   /* -------------------------------------------------------
    * RENDER MERMAID TREE
    * ----------------------------------------------------- */
-  function renderTree(rootLabel) {
-    const nodes = dataByType[currentType][rootLabel].nodes;
-    let diagram = "graph TD\n";
 
-    nodes.forEach(n => {
-      const childId = safeId(n.child_id);
-      const parentId = n.parent_id ? safeId(n.parent_id) : null;
-      const label = n.child_label;
+function renderTree(rootLabel) {
+  const group = dataByType[currentType][rootLabel];
 
-      diagram += `${childId}["${label}"]\n`;
-      if (parentId) {
-        diagram += `${parentId} --> ${childId}\n`;
-      }
+  const nodes = group.nodes;
+  const edges = group.edges;
+
+  let diagram = "graph TD\n";
+
+  /* ---------- Render nodes (once) ---------- */
+  nodes.forEach(n => {
+    diagram += `${n.id}["${n.label}"]\n`;
+  });
+
+  /* ---------- Render edges (once) ---------- */
+  edges.forEach(e => {
+    diagram += `${e.from} --> ${e.to}\n`;
+  });
+
+  const el = document.getElementById("tree");
+  el.innerHTML = "";
+
+  const uniqueId = "tree_" + Date.now();
+  mermaid.render(uniqueId, diagram)
+    .then(({ svg }) => {
+      el.innerHTML = svg;
+    })
+    .catch(err => {
+      el.innerHTML = "Failed to render tree";
+      console.error(err, diagram);
     });
+}
 
-    const el = document.getElementById("tree");
-    el.innerHTML = "";
-
-    const uniqueId = "tree_" + Date.now();
-    mermaid.render(uniqueId, diagram)
-      .then(({ svg }) => el.innerHTML = svg)
-      .catch(err => {
-        el.innerHTML = "Failed to render tree";
-        console.error(err);
-      });
-  }
 </script>
 </body>
 </html>
